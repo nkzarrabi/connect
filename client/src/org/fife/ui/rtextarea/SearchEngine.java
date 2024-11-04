@@ -592,7 +592,9 @@ public class SearchEngine {
 
                 // Append group
                 if (m.group(refNum) != null)
-                    result.append(m.group(refNum));
+                    {
+                        result.append(m.group(refNum));
+                    }
 
             }
 
