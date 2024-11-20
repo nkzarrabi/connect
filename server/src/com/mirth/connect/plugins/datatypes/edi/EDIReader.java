@@ -9,6 +9,7 @@
 
 package com.mirth.connect.plugins.datatypes.edi;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -42,7 +43,7 @@ public class EDIReader extends SAXParser {
         BufferedReader in = new BufferedReader(input.getCharacterStream());
         String nextLine = "";
         StringBuffer sb = new StringBuffer();
-        while ((nextLine = in.readLine()) != null) {
+        while ((nextLine = BoundedLineReader.readLine(in, 5_000_000)) != null) {
             sb.append(nextLine);
             sb.append("\n");
         }

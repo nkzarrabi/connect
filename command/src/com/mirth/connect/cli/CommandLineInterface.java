@@ -9,6 +9,7 @@
 
 package com.mirth.connect.cli;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -216,7 +217,7 @@ public class CommandLineInterface {
         String statement = null;
 
         try {
-            while ((statement = reader.readLine()) != null) {
+            while ((statement = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 out.println("Executing statement: " + statement);
                 executeStatement(statement);
             }
@@ -233,7 +234,7 @@ public class CommandLineInterface {
         String statement = null;
         writePrompt();
         try {
-            while ((statement = reader.readLine()) != null) {
+            while ((statement = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 executeStatement(statement);
                 writePrompt();
             }
