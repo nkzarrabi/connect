@@ -9,6 +9,7 @@
 
 package com.mirth.connect.manager;
 
+import io.github.pixee.security.SystemCommand;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,7 +19,7 @@ public class CmdUtil {
 
     public static int execCmd(String[] cmdLine, boolean waitFor) throws Exception {
         String[] cmd = concat(ServiceControllerFactory.getServiceController().getCommand().split(" "), cmdLine);
-        Process process = Runtime.getRuntime().exec(cmd);
+        Process process = SystemCommand.runCommand(Runtime.getRuntime(), cmd);
 
         if (!waitFor) {
             return 0;
@@ -41,7 +42,7 @@ public class CmdUtil {
 
     public static String execCmdWithOutput(String[] cmdLine) throws Exception {
         String[] cmd = concat(ServiceControllerFactory.getServiceController().getCommand().split(" "), cmdLine);
-        Process process = Runtime.getRuntime().exec(cmd);
+        Process process = SystemCommand.runCommand(Runtime.getRuntime(), cmd);
 
         StreamPumper outPumper = new StreamPumper(process.getInputStream(), System.out);
         StreamPumper errPumper = new StreamPumper(process.getErrorStream(), System.err);
@@ -61,7 +62,7 @@ public class CmdUtil {
 
     public static String execCmdWithErrorOutput(String[] cmdLine) throws Exception {
         String[] cmd = concat(ServiceControllerFactory.getServiceController().getCommand().split(" "), cmdLine);
-        Process process = Runtime.getRuntime().exec(cmd);
+        Process process = SystemCommand.runCommand(Runtime.getRuntime(), cmd);
 
         StreamPumper outPumper = new StreamPumper(process.getInputStream(), System.out);
         StreamPumper errPumper = new StreamPumper(process.getErrorStream(), System.err);
