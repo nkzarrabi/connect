@@ -13,6 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 
 import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.commons.io.IOUtils;
@@ -38,7 +39,7 @@ public class PDFViewer extends AttachmentViewer {
             byte[] rawData = attachment.getContent();
             Base64InputStream in = new Base64InputStream(new ByteArrayInputStream(rawData));
 
-            File temp = File.createTempFile(attachment.getId(), ".pdf");
+            File temp = Files.createTempFile(attachment.getId(), ".pdf").toFile();
             temp.deleteOnExit();
 
             OutputStream out = new FileOutputStream(temp);

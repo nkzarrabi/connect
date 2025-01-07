@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.UUID;
@@ -64,7 +65,7 @@ public class ExtensionUtil {
         NumberFormat formatter = new DecimalFormat("#.00");
 
         try {
-            File tempFile = File.createTempFile(UUID.randomUUID().toString(), ".zip");
+            File tempFile = Files.createTempFile(UUID.randomUUID().toString(), ".zip").toFile();
             URL url = new URL(address);
             out = new FileOutputStream(tempFile);
             URLConnection connection = url.openConnection();

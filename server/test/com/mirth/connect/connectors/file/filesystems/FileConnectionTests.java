@@ -9,6 +9,7 @@
 
 package com.mirth.connect.connectors.file.filesystems;
 
+import java.nio.file.Files;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -41,7 +42,7 @@ public class FileConnectionTests {
         ArrayList<String> testFileNames = new ArrayList<String>();
 
         for (int i = 0; i < 10; i++) {
-            File temp = File.createTempFile("ListFile", ".dat", someFolder);
+            File temp = Files.createTempFile(someFolder.toPath(), "ListFile", ".dat").toFile();
             testFileNames.add(temp.getName());
         }
 
@@ -179,7 +180,7 @@ public class FileConnectionTests {
 
         try {
             // someone set us up a temp file!
-            tempFile = File.createTempFile("mirthServerDE", ".dat", someFolder);
+            tempFile = Files.createTempFile(someFolder.toPath(), "mirthServerDE", ".dat").toFile();
         } catch (Exception e) {
             fail("We could not make the file using regular java");
         }
