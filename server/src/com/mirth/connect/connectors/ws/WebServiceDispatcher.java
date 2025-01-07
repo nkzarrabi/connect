@@ -19,6 +19,7 @@ import java.net.NoRouteToHostException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -441,7 +442,7 @@ public class WebServiceDispatcher extends DestinationConnector implements IWebSe
         }
 
         if (StringUtils.isNotBlank(wsdl)) {
-            File tempFile = File.createTempFile("WebServiceSender", ".wsdl");
+            File tempFile = Files.createTempFile("WebServiceSender", ".wsdl").toFile();
             tempFile.deleteOnExit();
             visitedUrls.put(wsdlUrl, tempFile);
 

@@ -12,6 +12,7 @@ package com.mirth.connect.util;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -20,7 +21,7 @@ import com.google.common.base.Strings;
 public class ZipTestUtils {
 
     public static File createTempZipFile(String fileName) throws Exception {
-        File tempFile = File.createTempFile("temp_zip", ".zip"); //write to system defined temp
+        File tempFile = Files.createTempFile("temp_zip", ".zip").toFile(); //write to system defined temp
         FileOutputStream fos = new FileOutputStream(tempFile);
         BufferedOutputStream bos = new BufferedOutputStream(fos);
         ZipOutputStream zos = new ZipOutputStream(bos);
