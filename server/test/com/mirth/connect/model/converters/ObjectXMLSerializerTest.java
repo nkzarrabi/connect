@@ -9,6 +9,7 @@
 
 package com.mirth.connect.model.converters;
 
+import io.github.pixee.security.xstream.HardeningConverter;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -40,6 +41,7 @@ public class ObjectXMLSerializerTest {
         Map<String, Object> map = new HashMap<String, Object>();
         // Manually allow all types here to deserialize an invalid value
         XStream xstream = new XStream(new Xpp3Driver());
+        xstream.registerConverter(new HardeningConverter());
         xstream.addPermission(AnyTypePermission.ANY);
         map.put("key", xstream.fromXML(CACHED_ROW_SET_XML));
         connectorMessage.setChannelMapContent(new MapContent(map, true));
