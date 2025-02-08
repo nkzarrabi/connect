@@ -38,6 +38,8 @@
 
 package org.dcm4che2.tool.dcmrcv;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -1085,7 +1087,7 @@ public class DcmRcv {
                     url.substring(9));
         }
         try {
-            return new URL(url).openStream();
+            return Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openStream();
         } catch (MalformedURLException e) {
             return new FileInputStream(url);
         }

@@ -9,6 +9,8 @@
 
 package com.mirth.connect.connectors.http;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -685,7 +687,7 @@ public class HttpReceiver extends SourceConnector implements IHttpReceiver, Bina
         requestMessage.setRemoteAddress(StringUtils.trimToEmpty(request.getRemoteAddr()));
         requestMessage.setQueryString(StringUtils.trimToEmpty(request.getQueryString()));
         requestMessage.setRequestUrl(StringUtils.trimToEmpty(getRequestURL(request)));
-        requestMessage.setContextPath(StringUtils.trimToEmpty(new URL(requestMessage.getRequestUrl()).getPath()));
+        requestMessage.setContextPath(StringUtils.trimToEmpty(Urls.create(requestMessage.getRequestUrl(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).getPath()));
 
         if (!ignorePayload) {
             InputStream requestInputStream = request.getInputStream();
@@ -992,7 +994,7 @@ public class HttpReceiver extends SourceConnector implements IHttpReceiver, Bina
 
         try {
             // Verify whether the URL is valid
-            new URL(requestURL);
+            Urls.create(requestURL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         } catch (MalformedURLException e) {
             // The request URL returned by Jetty is invalid, so build it up without the URI instead
             StringBuilder builder = new StringBuilder();

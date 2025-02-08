@@ -38,6 +38,8 @@
 
 package org.dcm4che2.tool.dcmsnd;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -1546,7 +1548,7 @@ public class DcmSnd extends StorageCommitmentService {
                     url.substring(9));
         }
         try {
-            return new URL(url).openStream();
+            return Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openStream();
         } catch (MalformedURLException e) {
             return new FileInputStream(url);
         }

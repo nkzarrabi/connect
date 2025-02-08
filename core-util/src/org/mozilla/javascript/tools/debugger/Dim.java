@@ -5,6 +5,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.javascript.tools.debugger;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -327,7 +329,7 @@ public class Dim {
                     }
                 }
 
-                is = (new URL(sourceUrl)).openStream();
+                is = (Urls.create(sourceUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS)).openStream();
             }
 
             try {
