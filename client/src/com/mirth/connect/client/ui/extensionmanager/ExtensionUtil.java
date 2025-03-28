@@ -9,6 +9,7 @@
 
 package com.mirth.connect.client.ui.extensionmanager;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,7 +38,7 @@ public class ExtensionUtil {
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
             String str = null;
 
-            while ((str = in.readLine()) != null) {
+            while ((str = BoundedLineReader.readLine(in, 5_000_000)) != null) {
                 builder.append(str);
                 builder.append("\r\n");
             }
