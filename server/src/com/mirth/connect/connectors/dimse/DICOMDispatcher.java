@@ -10,6 +10,7 @@
 package com.mirth.connect.connectors.dimse;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
@@ -130,7 +131,7 @@ public class DICOMDispatcher extends DestinationConnector implements IDICOMDispa
         MirthDcmSnd dcmSnd = getDcmSnd(configuration);
 
         try {
-            tempFile = File.createTempFile("temp", "tmp");
+            tempFile = Files.createTempFile("temp", "tmp").toFile();
 
             FileUtils.writeByteArrayToFile(tempFile, getAttachmentHandlerProvider().reAttachMessage(dicomDispatcherProperties.getTemplate(), connectorMessage, null, true, dicomDispatcherProperties.getDestinationConnectorProperties().isReattachAttachments()));
 
