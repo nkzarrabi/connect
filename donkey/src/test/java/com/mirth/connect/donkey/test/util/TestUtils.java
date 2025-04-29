@@ -9,6 +9,7 @@
 
 package com.mirth.connect.donkey.test.util;
 
+import java.nio.file.Files;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -1169,7 +1170,7 @@ public class TestUtils {
         Writer writer = null;
 
         if (PERFORMANCE_LOG_FILE != null) {
-            writer = new BufferedWriter(new FileWriter(new File(PERFORMANCE_LOG_FILE)));
+            writer = Files.newBufferedWriter(new File(PERFORMANCE_LOG_FILE).toPath());
         }
 
         for (Long time : times) {
