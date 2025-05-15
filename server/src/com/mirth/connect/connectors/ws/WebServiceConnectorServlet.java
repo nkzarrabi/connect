@@ -9,6 +9,8 @@
 
 package com.mirth.connect.connectors.ws;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +64,7 @@ public class WebServiceConnectorServlet extends AbstractWebServiceConnectorServl
     }
 
     protected ConnectionTestResponse testConnection(String channelId, String channelName, String urlString) throws Exception {
-        URL url = new URL(replacer.replaceValues(urlString, channelId, channelName));
+        URL url = Urls.create(replacer.replaceValues(urlString, channelId, channelName), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         int port = url.getPort();
         // If no port was provided, default to port 80 or 443.
         return ConnectorUtil.testConnection(url.getHost(), (port == -1) ? (StringUtils.equalsIgnoreCase(url.getProtocol(), "https") ? 443 : 80) : port, MAX_TIMEOUT);

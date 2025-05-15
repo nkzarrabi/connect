@@ -9,6 +9,8 @@
 
 package com.mirth.connect.connectors.http;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +40,7 @@ public class HttpConnectorServlet extends MirthServlet implements HttpConnectorS
     @Override
     public ConnectionTestResponse testConnection(String channelId, String channelName, ConnectorProperties properties) {
         try {
-            URL url = new URL(replacer.replaceValues(((RemoteHostConnectorProperties) properties).getHost(), channelId, channelName));
+            URL url = Urls.create(replacer.replaceValues(((RemoteHostConnectorProperties) properties).getHost(), channelId, channelName), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             int port = url.getPort();
             // If no port was provided, default to port 80 or 443.
             return ConnectorUtil.testConnection(url.getHost(), (port == -1) ? (StringUtils.equalsIgnoreCase(url.getProtocol(), "https") ? 443 : 80) : port, TIMEOUT);

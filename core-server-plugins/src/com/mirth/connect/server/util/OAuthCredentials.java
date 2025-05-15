@@ -1,5 +1,7 @@
 package com.mirth.connect.server.util;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -107,7 +109,7 @@ public class OAuthCredentials {
 		OAuthToken newOAuthToken = null;
 		
 		try {
-			URL urlObj = new URL(url);
+			URL urlObj = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 	        HttpHost target = new HttpHost(urlObj.getHost(), 443, "https");
 	        
 	        CredentialsProvider credsProvider = new BasicCredentialsProvider();

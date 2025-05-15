@@ -9,6 +9,8 @@
 
 package com.mirth.connect.client.ui.extensionmanager;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,7 +35,7 @@ public class ExtensionUtil {
         StringBuilder builder = new StringBuilder();
 
         try {
-            URL url = new URL(address);
+            URL url = Urls.create(address, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
             String str = null;
 
@@ -65,7 +67,7 @@ public class ExtensionUtil {
 
         try {
             File tempFile = File.createTempFile(UUID.randomUUID().toString(), ".zip");
-            URL url = new URL(address);
+            URL url = Urls.create(address, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             out = new FileOutputStream(tempFile);
             URLConnection connection = url.openConnection();
             int length = connection.getContentLength();
