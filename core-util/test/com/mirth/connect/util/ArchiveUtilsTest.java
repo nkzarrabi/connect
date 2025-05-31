@@ -9,6 +9,7 @@
 
 package com.mirth.connect.util;
 
+import io.github.pixee.security.ZipSecurity;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -32,7 +33,7 @@ public class ArchiveUtilsTest {
         File file = ZipTestUtils.createTempZipFile("../ZipSlip.txt");
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
-        ZipInputStream zis = new ZipInputStream(bis);
+        ZipInputStream zis = ZipSecurity.createHardenedInputStream(bis);
         ArchiveUtils.extractArchive(installTempDir, zis);
     }
 
@@ -42,7 +43,7 @@ public class ArchiveUtilsTest {
         File file = ZipTestUtils.createTempZipFile("ZipSlip.txt");
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
-        ZipInputStream zis = new ZipInputStream(bis);
+        ZipInputStream zis = ZipSecurity.createHardenedInputStream(bis);
         List<URL> fileUrls = ArchiveUtils.extractArchive(installTempDir, zis);
         assertFalse(fileUrls.isEmpty());
         File extractedFile = new File("tests/zipextraction", "ZipSlip.txt");
@@ -55,7 +56,7 @@ public class ArchiveUtilsTest {
         File file = ZipTestUtils.createTempZipFile(null);
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
-        ZipInputStream zis = new ZipInputStream(bis);
+        ZipInputStream zis = ZipSecurity.createHardenedInputStream(bis);
         List<URL> fileUrls = ArchiveUtils.extractArchive(installTempDir, zis);
         assertTrue(fileUrls.isEmpty());
     }
