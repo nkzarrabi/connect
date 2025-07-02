@@ -9,6 +9,7 @@
 
 package com.mirth.connect.manager;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -115,7 +116,7 @@ public class CmdUtil {
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 String line;
 
-                while ((line = br.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(br, 5_000_000)) != null) {
                     output.append(line + "\n");
                     os.println(line);
                 }

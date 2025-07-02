@@ -9,6 +9,7 @@
 
 package com.mirth.connect.userutil;
 
+import io.github.pixee.security.BoundedLineReader;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -396,12 +397,12 @@ public class JsonXmlUtilTest {
     private static String readFile(String filename) throws FileNotFoundException, IOException {
         try (BufferedReader br = new BufferedReader(new FileReader("tests/" + filename))) {
             StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
+            String line = BoundedLineReader.readLine(br, 5_000_000);
 
             while (line != null) {
                 sb.append(line);
                 sb.append(System.lineSeparator());
-                line = br.readLine();
+                line = BoundedLineReader.readLine(br, 5_000_000);
             }
 
             return sb.toString().trim();

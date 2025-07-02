@@ -9,6 +9,7 @@
 
 package com.mirth.connect.util;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -143,7 +144,7 @@ public class MessageImporter {
             boolean enteredMessage = true;
             int depth = 0;
 
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 ThreadUtils.checkInterruptedStatus();
 
                 if (StringUtils.contains(line, OPEN_ELEMENT)) {
