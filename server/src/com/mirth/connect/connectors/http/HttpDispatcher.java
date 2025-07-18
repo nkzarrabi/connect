@@ -12,6 +12,7 @@ package com.mirth.connect.connectors.http;
 import java.io.File;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -337,7 +338,7 @@ public class HttpDispatcher extends DestinationConnector implements IHttpDispatc
             }
 
             if (httpDispatcherProperties.isMultipart()) {
-                tempFile = File.createTempFile(UUID.randomUUID().toString(), ".tmp");
+                tempFile = Files.createTempFile(UUID.randomUUID().toString(), ".tmp").toFile();
             }
 
             HttpHost target = new HttpHost(host, port, scheme);

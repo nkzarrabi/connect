@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -419,7 +420,7 @@ public class DefaultExtensionController extends ExtensionController {
             /*
              * create a new temp file (in the install temp dir) to store the zip file contents
              */
-            tempFile = File.createTempFile(ServerUUIDGenerator.getUUID(), ".zip", installTempDir);
+            tempFile = Files.createTempFile(installTempDir.toPath(), ServerUUIDGenerator.getUUID(), ".zip").toFile();
             // write the contents of the multipart fileitem to the temp file
             try {
                 tempFileOutputStream = new FileOutputStream(tempFile);

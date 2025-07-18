@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import org.xml.sax.SAXException;
@@ -102,14 +103,14 @@ public class DICOMTests {
         DICOMSerializer serializer = new DICOMSerializer(null);
 //        String xmloutput = serializer.toXML(testMessage);
         //Dcm2Xml dcm2xml = new Dcm2Xml();
-        File xmlOut = File.createTempFile("test", "xml");
+        File xmlOut = Files.createTempFile("test", "xml").toFile();
         File dcmInput = new File("c:\\US-PAL-8-10x-echo.dcm");
         try {
             //      dcm2xml.convert(dcmInput,xmlOut);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        File dcmOutput = File.createTempFile("test", "dcm");
+        File dcmOutput = Files.createTempFile("test", "dcm").toFile();
         String[] args = new String[4];
         args[0] = "-x";
         args[1] = xmlOut.getAbsolutePath();
@@ -123,7 +124,7 @@ public class DICOMTests {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        dcmOutput = File.createTempFile("test", "dcm");
+        dcmOutput = Files.createTempFile("test", "dcm").toFile();
         args = new String[4];
         args[0] = "-x";
         args[1] = xmlOut.getAbsolutePath();
